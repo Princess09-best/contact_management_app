@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'screens/contacts_list.dart'; // Contact List Page
+// Add Contact Page
+// About Page
 
 void main() => runApp(const ContactManagementApp());
 
-//contact management app
+// Main Application
 class ContactManagementApp extends StatelessWidget {
   const ContactManagementApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // MaterialApp with Material3 theme
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple, // Primary color
-          brightness: Brightness.dark, // Use Brightness.light for light mode
+          seedColor: Colors.deepPurple,
+          brightness: Brightness.dark,
         ),
-        // Navigation Bar theme
         navigationBarTheme: NavigationBarThemeData(
-          backgroundColor: Colors.black, // Navigation Bar background color
-          indicatorColor: const Color.fromARGB(
-              255, 64, 6, 74), // Selected item highlight color
+          backgroundColor: Colors.black,
+          indicatorColor: const Color.fromARGB(255, 64, 6, 74),
         ),
       ),
       home: const NavigationExample(),
@@ -28,89 +29,58 @@ class ContactManagementApp extends StatelessWidget {
   }
 }
 
-class NavigationExample extends StatelessWidget {
+// Navigation with Bottom Navigation Bar
+class NavigationExample extends StatefulWidget {
   const NavigationExample({super.key});
 
-  // Function to handle navigation with MaterialPageRoute
-  void _navigateToPage(BuildContext context, int index) {
-    Widget page;
-    if (index == 0) {
-      page = const ContactsPage();
-    } else if (index == 1) {
-      page = const AddContactPage();
-    } else {
-      page = const AboutPage();
-    }
+  @override
+  _NavigationExampleState createState() => _NavigationExampleState();
+}
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => page),
-    );
-  }
+class _NavigationExampleState extends State<NavigationExample> {
+  int _selectedIndex = 0;
+
+  // List of screens for bottom navigation
+  final List<Widget> _pages = [
+    ContactsListScreen(), // Fetch and display contacts
+    //AddContactScreen(), // Add new contacts
+    //AboutScreen(), // About page
+    Scaffold(
+        body: Center(
+            child: Text("Add Contact Page (Coming Soon)"))), // Placeholder
+    Scaffold(
+        body: Center(child: Text("About Page (Coming Soon)"))), // Placeholder
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: _pages[_selectedIndex], // Show the selected screen
       bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedIndex,
         onDestinationSelected: (int index) {
-          _navigateToPage(context, index);
+          setState(() {
+            _selectedIndex = index; // Update selected page
+          });
         },
-        destinations: [
+        destinations: const [
           NavigationDestination(
-            selectedIcon: const Icon(Icons.contacts, color: Colors.white),
-            icon: const Icon(Icons.contacts_outlined, color: Colors.white),
+            selectedIcon: Icon(Icons.contacts, color: Colors.white),
+            icon: Icon(Icons.contacts_outlined, color: Colors.white),
             label: 'Contacts',
           ),
           NavigationDestination(
-            selectedIcon: const Icon(Icons.add, color: Colors.white),
-            icon: const Icon(Icons.add, color: Colors.white),
+            selectedIcon: Icon(Icons.add, color: Colors.white),
+            icon: Icon(Icons.add, color: Colors.white),
             label: 'Add Contact',
           ),
           NavigationDestination(
-            selectedIcon: const Icon(Icons.info, color: Colors.white),
-            icon: const Icon(Icons.info, color: Colors.white),
+            selectedIcon: Icon(Icons.info, color: Colors.white),
+            icon: Icon(Icons.info, color: Colors.white),
             label: 'About',
           ),
         ],
       ),
-    );
-  }
-}
-
-//pages
-
-class ContactsPage extends StatelessWidget {
-  const ContactsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Contacts ")),
-      body: const Center(child: Text(" Contacts Page")),
-    );
-  }
-}
-
-class AddContactPage extends StatelessWidget {
-  const AddContactPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Add Contact")),
-      body: const Center(child: Text(" Add Contact Page")),
-    );
-  }
-}
-
-class AboutPage extends StatelessWidget {
-  const AboutPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("About")),
-      body: const Center(child: Text(" About Page")),
     );
   }
 }

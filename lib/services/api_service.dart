@@ -7,13 +7,19 @@ class ApiService {
 
   // Fetch all contacts
   static Future<List<Map<String, dynamic>>> getAllContacts() async {
-    final response = await http.get(Uri.parse("${baseUrl}get_all_contact_mob"));
+    try {
+      final response =
+          await http.get(Uri.parse("${baseUrl}get_all_contact_mob"));
 
-    if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      return List<Map<String, dynamic>>.from(data);
-    } else {
-      throw Exception("Failed to load contacts");
+      if (response.statusCode == 200) {
+        List<dynamic> data = json.decode(response.body);
+
+        return List<Map<String, dynamic>>.from(data);
+      } else {
+        throw Exception("Server Error: ${response.statusCode}");
+      }
+    } catch (error) {
+      throw Exception("API Request Failed: $error");
     }
   }
 
