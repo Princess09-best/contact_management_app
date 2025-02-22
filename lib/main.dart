@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'screens/contacts_list.dart'; // Contact List Page
-// Add Contact Page
-// About Page
+import 'screens/contacts_list.dart'; // Contact List Page (Task 4)
+
+import 'screens/add_contacts.dart'; // Add Contact Page (Task 5)
+//import 'about.dart';          // About Page (Task 6)
 
 void main() => runApp(const ContactManagementApp());
 
@@ -34,20 +35,20 @@ class NavigationExample extends StatefulWidget {
   const NavigationExample({super.key});
 
   @override
-  _NavigationExampleState createState() => _NavigationExampleState();
+  NavigationExampleState createState() => NavigationExampleState(); // ✅ Fixed
 }
 
-class _NavigationExampleState extends State<NavigationExample> {
+class NavigationExampleState extends State<NavigationExample> {
   int _selectedIndex = 0;
 
   // List of screens for bottom navigation
   final List<Widget> _pages = [
     ContactsListScreen(), // Fetch and display contacts
-    //AddContactScreen(), // Add new contacts
+    AddContactScreen(), // Add new contacts
     //AboutScreen(), // About page
-    Scaffold(
-        body: Center(
-            child: Text("Add Contact Page (Coming Soon)"))), // Placeholder
+    //Scaffold(
+    //body: Center(
+    // child: Text("Add Contact Page (Coming Soon)"))), // Placeholder
     Scaffold(
         body: Center(child: Text("About Page (Coming Soon)"))), // Placeholder
   ];

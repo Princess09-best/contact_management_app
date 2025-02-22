@@ -10,15 +10,17 @@ class ApiService {
     try {
       final response =
           await http.get(Uri.parse("${baseUrl}get_all_contact_mob"));
+      print("API Response Status Code: ${response.statusCode}");
+      print("API Response Body: ${response.body}");
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
-
         return List<Map<String, dynamic>>.from(data);
       } else {
         throw Exception("Server Error: ${response.statusCode}");
       }
     } catch (error) {
+      print("API Request Failed: $error");
       throw Exception("API Request Failed: $error");
     }
   }
