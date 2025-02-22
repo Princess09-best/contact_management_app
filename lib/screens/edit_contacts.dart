@@ -35,13 +35,13 @@ class EditContactScreenState extends State<EditContactScreen> {
         _phoneController.text.trim(),
       );
 
-      if (!mounted) return; // ✅ Ensure widget is still in the tree
+      if (!mounted) return; //  Ensure widget is still in the tree
 
       if (result.toLowerCase() == "success") {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Contact updated successfully!")),
         );
-        Navigator.pop(context, true); // ✅ Return true to refresh contacts list
+        Navigator.pop(context, true); //  Return true to refresh contacts list
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Failed to update contact.")),
@@ -54,7 +54,7 @@ class EditContactScreenState extends State<EditContactScreen> {
       );
     }
 
-    if (mounted) setState(() => isLoading = false); // ✅ Safe state update
+    if (mounted) setState(() => isLoading = false); //  Safe state update
   }
 
   @override

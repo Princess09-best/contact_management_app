@@ -5,13 +5,13 @@ class ApiService {
   static const String baseUrl =
       "https://apps.ashesi.edu.gh/contactmgt/actions/";
 
-  // Fetch all contacts
+  // Get all contacts
   static Future<List<Map<String, dynamic>>> getAllContacts() async {
     try {
       final response =
           await http.get(Uri.parse("${baseUrl}get_all_contact_mob"));
-      print("API Response Status Code: ${response.statusCode}");
-      print("API Response Body: ${response.body}");
+      /* debugging: print("API Response Status Code: ${response.statusCode}");
+      print("API Response Body: ${response.body}");*/
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
@@ -20,12 +20,12 @@ class ApiService {
         throw Exception("Server Error: ${response.statusCode}");
       }
     } catch (error) {
-      print("API Request Failed: $error");
+      //print("API Request Failed: $error");
       throw Exception("API Request Failed: $error");
     }
   }
 
-  // Fetch a single contact by ID
+  // Get a single contact by ID
   static Future<Map<String, dynamic>> getContact(int contactId) async {
     final response = await http
         .get(Uri.parse("${baseUrl}get_a_contact_mob?contid=$contactId"));
@@ -37,7 +37,7 @@ class ApiService {
     }
   }
 
-  // ✅ Add a new contact using FormData
+  //  Add a new contact
   static Future<String> addContact(String name, String phone) async {
     final response = await http.post(
       Uri.parse("${baseUrl}add_contact_mob"),
@@ -45,7 +45,7 @@ class ApiService {
         "Content-Type": "application/x-www-form-urlencoded", // FormData Header
       },
       body: {
-        "ufullname": name, // ✅ Sending key-value pairs
+        "ufullname": name, // Sending key-value pairs
         "uphonename": phone,
       },
     );
@@ -57,7 +57,7 @@ class ApiService {
     }
   }
 
-  // ✅ Edit an existing contact using FormData
+  //  Editing an existing contact
   static Future<String> editContact(
       int contactId, String name, String phone) async {
     final response = await http.post(
@@ -66,7 +66,7 @@ class ApiService {
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: {
-        "cname": name, // ✅ Form field name from API
+        "cname": name, //  Form field name from API
         "cnum": phone,
         "cid": contactId.toString(),
       },
@@ -79,7 +79,7 @@ class ApiService {
     }
   }
 
-  // ✅ Delete a contact using FormData
+  // Deleting a contact
   static Future<bool> deleteContact(int contactId) async {
     final response = await http.post(
       Uri.parse("${baseUrl}delete_contact"),
@@ -92,7 +92,7 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      return response.body.trim().toLowerCase() == "true";
+      return response.body.trim().toLowerCase() == "";
     } else {
       throw Exception("Failed to delete contact");
     }
